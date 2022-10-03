@@ -5,7 +5,6 @@ import 'package:flutter_crud/home.dart';
 import 'package:get/get.dart';
 import 'database/db_helper.dart';
 import 'form_barang.dart';
-import 'list_barang.dart';
 import 'model/barang.dart';
 
 void main() {
