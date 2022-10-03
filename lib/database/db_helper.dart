@@ -3,9 +3,8 @@
 //dbhelper ini dibuat untuk
 //membuat database, membuat tabel, proses insert, read, update dan delete
 
-import 'package:flutter_crud/model/kontak.dart';
+import 'package:flutter_crud/model/barang.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 
 class DbHelper {
@@ -13,12 +12,12 @@ class DbHelper {
   static Database? _database;
 
   //inisialisasi beberapa variabel yang dibutuhkan
-  final String tableName = 'tableKontak';
+  final String tableName = 'tableBarang';
   final String columnId = 'id';
-  final String columnName = 'name';
-  final String columnMobileNo = 'mobileNo';
-  final String columnEmail = 'email';
-  final String columnCompany = 'company';
+  final String columnNama = 'nama';
+  final String columnJumlah = 'jumlah';
+  final String columnKondisi = 'kondisi';
+  final String columnMerek = 'merek';
 
   DbHelper._internal();
   factory DbHelper() => _instance;
@@ -34,7 +33,7 @@ class DbHelper {
 
   Future<Database?> _initDb() async {
     String databasePath = await getDatabasesPath();
-    String path = join(databasePath, 'kontak.db');
+    String path = join(databasePath, 'barang.db');
 
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
@@ -42,42 +41,42 @@ class DbHelper {
   //membuat tabel dan field-fieldnya
   Future<void> _onCreate(Database db, int version) async {
     var sql = "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY, "
-        "$columnName TEXT,"
-        "$columnMobileNo TEXT,"
-        "$columnEmail TEXT,"
-        "$columnCompany TEXT)";
+        "$columnNama TEXT,"
+        "$columnJumlah TEXT,"
+        "$columnKondisi TEXT,"
+        "$columnMerek TEXT)";
     await db.execute(sql);
   }
 
   //insert ke database
-  Future<int?> saveKontak(Kontak kontak) async {
+  Future<int?> saveBarang(Barang barang) async {
     var dbClient = await _db;
-    return await dbClient!.insert(tableName, kontak.toMap());
+    return await dbClient!.insert(tableName, barang.toMap());
   }
 
   //read database
-  Future<List?> getAllKontak() async {
+  Future<List?> getAllBarang() async {
     var dbClient = await _db;
     var result = await dbClient!.query(tableName, columns: [
       columnId,
-      columnName,
-      columnCompany,
-      columnMobileNo,
-      columnEmail
+      columnNama,
+      columnMerek,
+      columnJumlah,
+      columnKondisi
     ]);
 
     return result.toList();
   }
 
   //update database
-  Future<int?> updateKontak(Kontak kontak) async {
+  Future<int?> updateBarang(Barang barang) async {
     var dbClient = await _db;
-    return await dbClient!.update(tableName, kontak.toMap(),
-        where: '$columnId = ?', whereArgs: [kontak.id]);
+    return await dbClient!.update(tableName, barang.toMap(),
+        where: '$columnId = ?', whereArgs: [barang.id]);
   }
 
   //hapus database
-  Future<int?> deleteKontak(int id) async {
+  Future<int?> deleteBarang(int id) async {
     var dbClient = await _db;
     return await dbClient!
         .delete(tableName, where: '$columnId = ?', whereArgs: [id]);

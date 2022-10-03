@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud/home.dart';
 import 'package:get/get.dart';
 import 'database/db_helper.dart';
-import 'form_kontak.dart';
-import 'list_kontak.dart';
-import 'model/kontak.dart';
+import 'form_barang.dart';
+import 'model/barang.dart';
 
 void main() {
   runApp(MyApp());
