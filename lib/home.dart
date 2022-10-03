@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'database/db_helper.dart';
 import 'form_barang.dart';
@@ -34,8 +35,8 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 showSearch(
                   context: context,
-                  delegate: CustomSearchDelegate(),
-                );
+                  delegate: CustomSearchDelegate(listBarang),
+                ).then((_) => _getAllBarang());
               }),
         ],
         backgroundColor: Colors.indigoAccent,
@@ -233,6 +234,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
+  CustomSearchDelegate(this.data);
+  final List<Barang> data;
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -256,23 +259,31 @@ class CustomSearchDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildResults(BuildContext context) => Container();
+  Widget buildResults(BuildContext context) {
+    List<Barang> matchQuery = [];
+    for (var barang in data) {
+      if (barang.name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(barang);
+      }
+    }
+    if (matchQuery.isEmpty) {
+      return const Center(child: Text("Data tidak ditemukan"));
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: ((context, index) {
+        return ListTile(
+          title: Text(matchQuery[index].name ?? ""),
+          onTap: () {
+            Get.to(FormBarang(barang: matchQuery[index]));
+          },
+        );
+      }),
+    );
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> suggestions = ['mouse', 'monitor'];
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (context, index) {
-        final suggestion = suggestions[index];
-
-        return ListTile(
-          title: Text(suggestion),
-          onTap: () {
-            query = suggestion;
-          },
-        );
-      },
-    );
+    return const SizedBox();
   }
 }
