@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.tealAccent,
+      backgroundColor: Colors.white70,
       appBar: AppBar(
         title: const Text('Inventaris'),
         actions: [
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.lime,
+                color: Colors.redAccent,
               ),
               child: Text('Menu'),
             ),
@@ -82,16 +82,16 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            // ListTile(
-            //   title: const Text('List'),
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => const ListBarangPage()),
-            //     );
-            //   },
-            // ),
+             ListTile(
+              title: const Text('Settings'),
+             onTap: () {
+             Navigator.push(
+                context,
+                MaterialPageRoute(
+                     builder: (context) => FormBarang()),
+              );
+             },
+            ),
           ],
         ),
       ),

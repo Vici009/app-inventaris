@@ -41,7 +41,7 @@ class _FormBarangState extends State<FormBarang> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.white60,
       appBar: AppBar(
         title: Text('Form Barang'),
       ),
