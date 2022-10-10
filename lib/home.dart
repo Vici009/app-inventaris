@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'database/db_helper.dart';
 import 'form_barang.dart';
 import 'model/barang.dart';
+import 'settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
              Navigator.push(
                 context,
                 MaterialPageRoute(
-                     builder: (context) => FormBarang()),
+                     builder: (context) => Settings()),
               );
              },
             ),
@@ -215,7 +216,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // membuka halaman tambah Barang
-  Future<void> _openFormCreate() async {
+  Future<void> openFormCreate() async {
     var result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => FormBarang()));
     if (result == 'save') {
