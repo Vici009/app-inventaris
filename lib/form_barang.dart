@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'database/db_helper.dart';
+import 'database/brg.dart';
 import 'model/barang.dart';
 
 class FormBarang extends StatefulWidget {

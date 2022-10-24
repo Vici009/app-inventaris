@@ -3,9 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/home.dart';
 import 'package:get/get.dart';
-import 'database/db_helper.dart';
+import 'database/brg.dart';
+import 'database/brg_keluar.dart';
+import 'database/brg_masuk.dart';
 import 'form_barang.dart';
 import 'model/barang.dart';
+import 'menu.dart';
+import 'settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Inventaris',
-      home: HomePage(),
+      home: Menu(),
     );
   }
 }
