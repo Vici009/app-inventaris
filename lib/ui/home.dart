@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'database/DbHelper.dart';
-import 'database/DbHelperkeluar.dart';
-import 'database/DbHelpermasuk.dart';
+import '../database/db_helper.dart';
+import '../database/db_helperkeluar.dart';
+import '../database/db_helpermasuk.dart';
+import '../model/barang.dart';
 import 'form_barang.dart';
-import 'model/barang.dart';
 import 'settings.dart';
 import 'menu.dart';
 
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FormBarang(),
+              builder: (context) => const FormBarang(),
             ),
           ).then((_) => _getAllBarang());
         },
@@ -83,20 +83,19 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Menu(),
+                    builder: (context) => const Menu(),
                   ),
                 );
               },
             ),
-             ListTile(
+            ListTile(
               title: const Text('Settings'),
-             onTap: () {
-             Navigator.push(
-                context,
-                MaterialPageRoute(
-                     builder: (context) => Settings()),
-              );
-             },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Settings()),
+                );
+              },
             ),
           ],
         ),
@@ -112,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.monitor,
                   size: 50,
                 ),
-                title: Text('${barang.namabarang}'),
+                title: Text('${barang.namaBrg}'),
                 subtitle: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                               child: Column(
                                 children: [
                                   Text(
-                                      "Yakin ingin Menghapus Data ${barang.namabarang}")
+                                      "Yakin ingin Menghapus Data ${barang.namaBrg}")
                                 ],
                               ),
                             ),
@@ -214,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
   //menghapus data Barang
   Future<void> _deleteBarang(Barang barang, int position) async {
-    await db.deleteBarang(barang.id!);
+    await db.deleteBarang(barang.idBrg!);
     setState(() {
       listBarang.removeAt(position);
     });
@@ -223,7 +222,7 @@ class _HomePageState extends State<HomePage> {
   // membuka halaman tambah Barang
   Future<void> openFormCreate() async {
     var result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FormBarang()));
+        context, MaterialPageRoute(builder: (context) => const FormBarang()));
     if (result == 'save') {
       await _getAllBarang();
     }
@@ -268,7 +267,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     List<Barang> matchQuery = [];
     for (var barang in data) {
-      if (barang.namabarang!.toLowerCase().contains(query.toLowerCase())) {
+      if (barang.namaBrg!.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(barang);
       }
     }
@@ -279,7 +278,7 @@ class CustomSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: ((context, index) {
         return ListTile(
-          title: Text(matchQuery[index].namabarang ?? ""),
+          title: Text(matchQuery[index].namaBrg ?? ""),
           onTap: () {
             Get.to(FormBarang(barang: matchQuery[index]));
           },
