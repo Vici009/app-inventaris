@@ -39,6 +39,7 @@ dependencies:
   get: ^4.6.5
   settings_ui: ^2.0.2
   icons_launcher: ^2.0.5
+  google_fonts: ^3.0.1
 
 
 dev_dependencies:
