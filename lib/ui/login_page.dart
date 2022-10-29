@@ -128,7 +128,7 @@ class _CardFormLoginState extends State<CardFormLogin> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 5,
+          elevation: 4,
           color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -204,8 +204,12 @@ class _CardFormLoginState extends State<CardFormLogin> {
                         }
                       }
                     },
-                    child: const Text("Masuk"),
+                    child: const Text(
+                      "Masuk",
+                      style: TextStyle(color: Colors.white),
+                    ),
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
                       minimumSize: const Size.fromHeight(48),
                     ),
                   )
