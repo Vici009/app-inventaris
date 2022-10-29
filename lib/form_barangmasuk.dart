@@ -1,41 +1,40 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'database/DbHelper.dart';
-import 'model/barang.dart';
+import 'database/DbHelpermasuk.dart';
+import 'model/barangmasuk.dart';
 
-class FormBarang extends StatefulWidget {
-  final Barang? barang;
+class FormBarangMasuk extends StatefulWidget {
+  final BarangMasuk? barangMasuk;
 
-  FormBarang({this.barang});
+  FormBarangMasuk({this.barangMasuk});
 
   @override
-  _FormBarangState createState() => _FormBarangState();
+  _FormBarangMasukState createState() => _FormBarangMasukState();
 }
 
-class _FormBarangState extends State<FormBarang> {
-  DbHelper db = DbHelper();
+class _FormBarangMasukState extends State<FormBarangMasuk> {
+  DbHelperMasuk dbm = DbHelperMasuk();
 
-  TextEditingController? name;
-  TextEditingController? lastName;
+  TextEditingController? id_brg;
   TextEditingController? jumlah;
+  TextEditingController? waktu;
   TextEditingController? deskripsi;
-  TextEditingController? jenis;
 
   @override
   void initState() {
     super.initState();
-    name = TextEditingController(
-        text: widget.barang == null ? '' : widget.barang!.namabarang);
+    id_brg = TextEditingController(
+        text: widget.barangMasuk == null ? '' : widget.barangMasuk!.idbarang);
 
     jumlah = TextEditingController(
-        text: widget.barang == null ? '' : widget.barang!.jumlah);
+        text: widget.barangMasuk == null ? '' : widget.barangMasuk!.jumlah);
+
+    waktu = TextEditingController(
+        text: widget.barangMasuk == null ? '' : widget.barangMasuk!.waktu);
 
     deskripsi = TextEditingController(
-        text: widget.barang == null ? '' : widget.barang!.deskripsi);
-
-    jenis = TextEditingController(
-        text: widget.barang == null ? '' : widget.barang!.jenis);
+        text: widget.barangMasuk == null ? '' : widget.barangMasuk!.deskripsi);
   }
 
   @override
@@ -53,7 +52,7 @@ class _FormBarangState extends State<FormBarang> {
               top: 20,
             ),
             child: TextField(
-              controller: name,
+              controller: id_brg,
               decoration: InputDecoration(
                   labelText: 'Barang',
                   border: OutlineInputBorder(
@@ -82,7 +81,7 @@ class _FormBarangState extends State<FormBarang> {
             child: ButtonTheme(
               alignedDropdown: true,
               child: DropdownButtonFormField<String?>(
-                value: deskripsi?.text == "" ? null : deskripsi?.text,
+                value: waktu?.text == "" ? null : waktu?.text,
                 hint: Text("Pilih kondisi barang"),
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(vertical: 16),
@@ -102,8 +101,8 @@ class _FormBarangState extends State<FormBarang> {
                 ],
                 onChanged: (value) {
                   setState(
-                    () {
-                      deskripsi?.text = value ?? "";
+                        () {
+                      waktu?.text = value ?? "";
                     },
                   );
                 },
@@ -128,7 +127,7 @@ class _FormBarangState extends State<FormBarang> {
               top: 20,
             ),
             child: TextField(
-              controller: jenis,
+              controller: deskripsi,
               decoration: InputDecoration(
                   labelText: 'Merek',
                   border: OutlineInputBorder(
@@ -139,17 +138,17 @@ class _FormBarangState extends State<FormBarang> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: ElevatedButton(
-              child: (widget.barang == null)
+              child: (widget.barangMasuk == null)
                   ? Text(
-                      'Add',
-                      style: TextStyle(color: Colors.white),
-                    )
+                'Add',
+                style: TextStyle(color: Colors.white),
+              )
                   : Text(
-                      'Update',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                'Update',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
-                upsertBarang();
+                upsertBarangMasuk();
               },
             ),
           )
@@ -158,24 +157,24 @@ class _FormBarangState extends State<FormBarang> {
     );
   }
 
-  Future<void> upsertBarang() async {
-    if (widget.barang != null) {
+  Future<void> upsertBarangMasuk() async {
+    if (widget.barangMasuk != null) {
       //update
-      await db.updateBarang(Barang.fromMap({
-        'id': widget.barang!.id,
-        'nama': name!.text,
+      await dbm.updateBarangMasuk(BarangMasuk.fromMap({
+        'id': widget.barangMasuk!.idbrgmasuk,
+        'nama': id_brg!.text,
         'jumlah': jumlah!.text,
-        'kondisi': deskripsi!.text,
-        'merek': jenis!.text
+        'kondisi': waktu!.text,
+        'merek': deskripsi!.text
       }));
       Navigator.pop(context, 'update');
     } else {
       //insert
-      await db.saveBarang(Barang(
-        namabarang: name!.text,
+      await dbm.saveBarangMasuk(BarangMasuk(
+        idbarang: id_brg!.text,
         jumlah: jumlah!.text,
+        waktu: waktu!.text,
         deskripsi: deskripsi!.text,
-        jenis: jenis!.text,
       ));
       Navigator.pop(context, 'save');
     }

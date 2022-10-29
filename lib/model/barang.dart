@@ -2,12 +2,12 @@
 
 class Barang {
   int? id;
-  String? name;
+  String? namabarang;
   String? jumlah;
-  String? kondisi;
-  String? merek;
+  String? deskripsi;
+  String? jenis;
 
-  Barang({this.id, this.name, this.jumlah, this.kondisi, this.merek});
+  Barang({this.id, this.namabarang, this.jumlah, this.deskripsi, this.jenis});
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
@@ -15,19 +15,19 @@ class Barang {
     if (id != null) {
       map['id'] = id;
     }
-    map['nama'] = name;
+    map['nama'] = namabarang;
     map['jumlah'] = jumlah;
-    map['kondisi'] = kondisi;
-    map['merek'] = merek;
+    map['deskripsi'] = deskripsi;
+    map['jenis'] = jenis;
 
     return map;
   }
 
   Barang.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.name = map['nama'];
+    this.namabarang = map['nama barang'];
     this.jumlah = map['jumlah'];
-    this.kondisi = map['kondisi'];
-    this.merek = map['merek'];
+    this.deskripsi = map['deskripsi'];
+    this.jenis = map['jenis'];
   }
 }

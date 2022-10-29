@@ -3,24 +3,24 @@
 //dbhelper ini dibuat untuk
 //membuat database, membuat tabel, proses insert, read, update dan delete
 
-import 'package:flutter_crud/model/barangmasuk.dart';
+import 'package:flutter_crud/model/barangkeluar.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DbHelperMasuk {
-  static final DbHelperMasuk _instance = DbHelperMasuk._internal();
+class DbHelperKeluar {
+  static final DbHelperKeluar _instance = DbHelperKeluar._internal();
   static Database? _database;
 
   //inisialisasi beberapa variabel yang dibutuhkan
-  final String tableName = 'tableBarangMasuk';
-  final String columnId = 'id_brg_masuk';
+  final String tableName = 'tableBarangKeluar';
+  final String columnIdKeluar = 'id_brg_keluar';
   final String columnIdBarang = 'id_brg';
   final String columnJumlah = 'jumlah';
   final String columnWaktu = 'waktu';
   final String columnDeskripsi = 'deskripsi';
 
-  DbHelperMasuk._internal();
-  factory DbHelperMasuk() => _instance;
+  DbHelperKeluar._internal();
+  factory DbHelperKeluar() => _instance;
 
   //cek apakah database ada
   Future<Database?> get _db async {
@@ -33,32 +33,32 @@ class DbHelperMasuk {
 
   Future<Database?> _initDb() async {
     String databasePath = await getDatabasesPath();
-    String path = join(databasePath, 'barang.db');
+    String path = join(databasePath, 'barangKeluar.db');
 
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   //membuat tabel dan field-fieldnya
   Future<void> _onCreate(Database db, int version) async {
-    var sql = "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY, "
+    var sql = "CREATE TABLE $tableName($columnIdKeluar INTEGER PRIMARY KEY, "
         "$columnIdBarang TEXT,"
         "$columnJumlah TEXT,"
-        "$columnWaktu TIME,"
+        "$columnWaktu TIMESTAMP,"
         "$columnDeskripsi TEXT)";
     await db.execute(sql);
   }
 
   //insert ke database
-  Future<int?> saveBarangMasuk(BarangMasuk barangMasuk) async {
+  Future<int?> saveBarangKeluar(BarangKeluar barangKeluar) async {
     var dbClient = await _db;
-    return await dbClient!.insert(tableName, barangMasuk.toMap());
+    return await dbClient!.insert(tableName, barangKeluar.toMap());
   }
 
   //read database
-  Future<List?> getAllBarang() async {
+  Future<List?> getAllBarangKeluar() async {
     var dbClient = await _db;
     var result = await dbClient!.query(tableName, columns: [
-      columnId,
+      columnIdKeluar,
       columnIdBarang,
       columnWaktu,
       columnJumlah,
@@ -69,16 +69,16 @@ class DbHelperMasuk {
   }
 
   //update database
-  Future<int?> updateBarangMasuk(BarangMasuk barangMasuk) async {
+  Future<int?> updateBarangKeluar(BarangKeluar barangKeluar) async {
     var dbClient = await _db;
-    return await dbClient!.update(tableName, barangMasuk.toMap(),
-        where: '$columnId = ?', whereArgs: [barangMasuk.id_brg_masuk]);
+    return await dbClient!.update(tableName, barangKeluar.toMap(),
+        where: '$columnIdKeluar = ?', whereArgs: [barangKeluar.idbrgkeluar]);
   }
 
   //hapus database
-  Future<int?> deleteBarang(int id) async {
+  Future<int?> deleteBarangKeluar(int id) async {
     var dbClient = await _db;
     return await dbClient!
-        .delete(tableName, where: '$columnId = ?', whereArgs: [id]);
+        .delete(tableName, where: '$columnIdKeluar = ?', whereArgs: [id]);
   }
 }

@@ -13,11 +13,11 @@ class DbHelper {
 
   //inisialisasi beberapa variabel yang dibutuhkan
   final String tableName = 'tableBarang';
-  final String columnId = 'id';
-  final String columnNama = 'nama';
+  final String columnId = 'id_brg';
+  final String columnNama = 'nama_brg';
   final String columnJumlah = 'jumlah';
-  final String columnKondisi = 'kondisi';
-  final String columnMerek = 'merek';
+  final String columnDeskripsi = 'deskripsi';
+  final String columnJenis = 'jenis';
 
   DbHelper._internal();
   factory DbHelper() => _instance;
@@ -43,8 +43,8 @@ class DbHelper {
     var sql = "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY, "
         "$columnNama TEXT,"
         "$columnJumlah TEXT,"
-        "$columnKondisi TEXT,"
-        "$columnMerek TEXT)";
+        "$columnDeskripsi TEXT,"
+        "$columnJenis TEXT)";
     await db.execute(sql);
   }
 
@@ -60,9 +60,9 @@ class DbHelper {
     var result = await dbClient!.query(tableName, columns: [
       columnId,
       columnNama,
-      columnMerek,
+      columnJenis,
       columnJumlah,
-      columnKondisi
+      columnDeskripsi
     ]);
 
     return result.toList();

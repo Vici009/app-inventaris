@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/form_barang.dart';
+import 'package:flutter_crud/form_barangkeluar.dart';
+import 'package:flutter_crud/form_barangmasuk.dart';
 import 'home.dart';
 
 class Menu extends StatelessWidget {
@@ -60,7 +62,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FormBarang()),
+                MaterialPageRoute(builder: (context) => FormBarangMasuk()),
               );
             },
             child: const Text('Barang Masuk'),
@@ -71,7 +73,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FormBarang()),
+                MaterialPageRoute(builder: (context) => FormBarangKeluar()),
               );
             },
             child: const Text('Barang Keluar'),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'database/brg.dart';
+import 'database/DbHelper.dart';
+import 'database/DbHelperkeluar.dart';
+import 'database/DbHelpermasuk.dart';
 import 'form_barang.dart';
 import 'model/barang.dart';
 import 'settings.dart';
@@ -17,6 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Barang> listBarang = [];
   DbHelper db = DbHelper();
+  DbHelperKeluar dbk = DbHelperKeluar();
+  DbHelperMasuk dbm = DbHelperMasuk();
 
   @override
   void initState() {
@@ -108,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.monitor,
                   size: 50,
                 ),
-                title: Text('${barang.name}'),
+                title: Text('${barang.namabarang}'),
                 subtitle: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(
                         top: 8,
                       ),
-                      child: Text("Kondisi: ${barang.kondisi}"),
+                      child: Text("Kondisi: ${barang.deskripsi}"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -129,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(
                         top: 8,
                       ),
-                      child: Text("Merek: ${barang.merek}"),
+                      child: Text("Merek: ${barang.jenis}"),
                     )
                   ],
                 ),
@@ -155,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                               child: Column(
                                 children: [
                                   Text(
-                                      "Yakin ingin Menghapus Data ${barang.name}")
+                                      "Yakin ingin Menghapus Data ${barang.namabarang}")
                                 ],
                               ),
                             ),
@@ -264,7 +268,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     List<Barang> matchQuery = [];
     for (var barang in data) {
-      if (barang.name!.toLowerCase().contains(query.toLowerCase())) {
+      if (barang.namabarang!.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(barang);
       }
     }
@@ -275,7 +279,7 @@ class CustomSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: ((context, index) {
         return ListTile(
-          title: Text(matchQuery[index].name ?? ""),
+          title: Text(matchQuery[index].namabarang ?? ""),
           onTap: () {
             Get.to(FormBarang(barang: matchQuery[index]));
           },

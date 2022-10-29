@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/home.dart';
 import 'package:get/get.dart';
-import 'database/brg.dart';
-import 'database/brg_keluar.dart';
-import 'database/brg_masuk.dart';
+import 'database/DbHelper.dart';
+import 'database/DbHelperkeluar.dart';
+import 'database/DbHelpermasuk.dart';
 import 'form_barang.dart';
 import 'model/barang.dart';
+import 'model/barangkeluar.dart';
+import 'model/barangmasuk.dart';
 import 'menu.dart';
 import 'settings.dart';
 
