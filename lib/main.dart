@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/theme/color.dart';
+import 'package:flutter_crud/ui/login_page.dart';
 import 'package:get/get.dart';
-import 'ui/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Inventaris',
-      home: Menu(),
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: kPrimaryColor,
+        ),
+      ),
+      home: const LoginPage(),
     );
   }
 }
