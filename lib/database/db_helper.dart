@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 //dbhelper ini dibuat untuk
 //membuat database, membuat tabel, proses insert, read, update dan delete
 
@@ -72,7 +70,7 @@ class DbHelper {
   Future<int?> updateBarang(Barang barang) async {
     var dbClient = await _db;
     return await dbClient!.update(tableName, barang.toMap(),
-        where: '$columnId = ?', whereArgs: [barang.id]);
+        where: '$columnId = ?', whereArgs: [barang.idBrg]);
   }
 
   //hapus database

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud/form_barang.dart';
-import 'package:flutter_crud/form_barangkeluar.dart';
-import 'package:flutter_crud/form_barangmasuk.dart';
 import 'home.dart';
 
 class Menu extends StatelessWidget {
@@ -40,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(
+          const Text(
             'Selamat datang \n di Aplikasi Inventaris \n dibuat oleh \n M.Fikri Rahmatullah',
             maxLines: 4,
             style: TextStyle(fontSize: 30),
@@ -55,28 +52,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               );
             },
             child: const Text('Kelola Barang'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            style: style,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FormBarangMasuk()),
-              );
-            },
-            child: const Text('Barang Masuk'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            style: style,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FormBarangKeluar()),
-              );
-            },
-            child: const Text('Barang Keluar'),
           ),
         ],
       ),
