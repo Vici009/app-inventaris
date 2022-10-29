@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/theme/color.dart';
 import 'package:flutter_crud/theme/text_style.dart';
-import 'package:flutter_crud/ui/menu.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -129,7 +128,8 @@ class _CardFormLoginState extends State<CardFormLogin> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          elevation: 10,
+          elevation: 5,
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -186,7 +186,7 @@ class _CardFormLoginState extends State<CardFormLogin> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: ((context) => const Menu()),
+                              builder: ((context) => const LoginPage()),
                             ),
                           );
                         } else {

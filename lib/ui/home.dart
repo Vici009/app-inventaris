@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/ui/menu_page.dart';
 import 'package:get/get.dart';
 
 import '../database/db_helper.dart';
@@ -7,7 +8,6 @@ import '../database/db_helpermasuk.dart';
 import '../model/barang.dart';
 import 'form_barang.dart';
 import 'settings.dart';
-import 'menu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Menu(),
+                    builder: (context) => const MenuPage(),
                   ),
                 );
               },

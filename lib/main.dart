@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Inventaris',
       theme: ThemeData(
+        useMaterial3: true,
         colorScheme: const ColorScheme.light(
           primary: kPrimaryColor,
         ),
