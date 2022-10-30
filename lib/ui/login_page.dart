@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/theme/color.dart';
 import 'package:flutter_crud/theme/text_style.dart';
+import 'package:flutter_crud/ui/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -186,7 +187,7 @@ class _CardFormLoginState extends State<CardFormLogin> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: ((context) => const LoginPage()),
+                              builder: ((context) => const HomePage()),
                             ),
                           );
                         } else {
