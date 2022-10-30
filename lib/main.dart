@@ -20,6 +20,10 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: kPrimaryColor,
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style:
+              ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+        ),
       ),
       home: const LoginPage(),
     );
