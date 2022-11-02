@@ -4,6 +4,7 @@ import 'package:flutter_crud/theme/color.dart';
 import 'package:flutter_crud/theme/text_style.dart';
 
 import '../model/barang.dart';
+import 'barang_masuk.dart';
 import 'form_barang.dart';
 
 class HomePage extends StatefulWidget {
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                 child: const Icon(Icons.delete,
                                     color: Colors.white),
                               ),
-                              key: ValueKey(barang.idBrg),
+                              key: UniqueKey(),
                               direction: DismissDirection.endToStart,
                               child: ListTile(
                                 onTap: () {
@@ -123,31 +124,41 @@ class _HomePageState extends State<HomePage> {
                                     backgroundColor: kPrimaryColor,
                                     child: Icon(Icons.computer)),
                                 title: Text(
-                                  "${barang.namaBrg} (${barang.jenis})",
+                                  "${barang.namaBrg}",
                                   style: AppTextStyle.medium(fontSize: 16),
                                 ),
-                                subtitle: UnconstrainedBox(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 2,
-                                      horizontal: 8,
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("${barang.deskripsi}"),
+                                    UnconstrainedBox(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 2,
+                                          horizontal: 8,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          // FIXME : GANTI WARNA SESUAI YANG DIMINATI
+                                          color: barang.jenis == "Alat"
+                                              ? Colors.purple
+                                              : Colors.deepOrange,
+                                        ),
+                                        child: Text(
+                                          "${barang.jenis}",
+                                          style: AppTextStyle.reg(
+                                              color: Colors.white,
+                                              fontSize: 12),
+                                        ),
+                                      ),
                                     ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: barang.deskripsi == "Bagus"
-                                          ? Colors.green
-                                          : Colors.red,
-                                    ),
-                                    child: Text(
-                                      "${barang.deskripsi}",
-                                      style: AppTextStyle.reg(
-                                          color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
+                                  ],
                                 ),
                                 trailing: Container(
-                                  width: 30,
+                                  // width: 30,
+                                  width: 50,
                                   height: 30,
                                   alignment: Alignment.center,
                                   padding: const EdgeInsets.symmetric(
@@ -158,8 +169,9 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius: BorderRadius.circular(6),
                                     color: kPrimaryColor,
                                   ),
+                                  // FIXME : PERBAIKI TOTAL BARANG
                                   child: Text(
-                                    "${barang.jumlah}",
+                                    "${barang.jumlah}/3",
                                     style: AppTextStyle.reg(
                                         color: Colors.white, fontSize: 12),
                                   ),
@@ -261,7 +273,14 @@ class _BottomSheetState extends State<BottomSheet> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => const BarangMasukPage()),
+                          ),
+                        );
+                      },
                       child: const Text("Barang Masuk"),
                     ),
                   ),
