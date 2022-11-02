@@ -18,7 +18,6 @@ class _FormBarangState extends State<FormBarang> {
   GlobalKey<FormState> formKey = GlobalKey();
 
   TextEditingController? name;
-  TextEditingController? lastName;
   TextEditingController? jumlah;
   TextEditingController? deskripsi;
   TextEditingController? jenis;
@@ -42,7 +41,6 @@ class _FormBarangState extends State<FormBarang> {
   @override
   void dispose() {
     name?.dispose();
-    lastName?.dispose();
     jumlah?.dispose();
     deskripsi?.dispose();
     jenis?.dispose();
@@ -55,7 +53,7 @@ class _FormBarangState extends State<FormBarang> {
       appBar: AppBar(
           title: (widget.barang == null)
               ? const Text('Tambah Barang')
-              : const Text("Update Barang")),
+              : const Text("Ubah Barang")),
       body: Form(
         key: formKey,
         child: ListView(
@@ -105,60 +103,23 @@ class _FormBarangState extends State<FormBarang> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: ButtonTheme(
-                alignedDropdown: true,
-                child: DropdownButtonFormField<String?>(
-                  validator: ((value) {
-                    if (value == null) return "kondisi barang wajib di isi";
-                    if (value.isEmpty) return "kondisi barang wajib di isi";
-                    return null;
-                  }),
-                  isDense: true,
-                  borderRadius: BorderRadius.circular(12),
-                  value: deskripsi?.text == "" ? "Bagus" : deskripsi?.text,
-                  hint: const Text("Pilih kondisi barang"),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  items: const <DropdownMenuItem<String?>>[
-                    DropdownMenuItem(
-                      child: Text("Bagus"),
-                      value: "Bagus",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Rusak"),
-                      value: "Rusak",
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(
-                      () {
-                        deskripsi?.text = value ?? "";
-                      },
-                    );
-                  },
-                ),
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.only(
                 top: 20,
               ),
               child: TextFormField(
-                controller: jenis,
+                controller: deskripsi,
+                minLines: 3,
+                maxLines: 4,
                 validator: (value) {
-                  if (value == null) return "merek wajib di isi";
-                  if (value.isEmpty) return "merek wajib di isi";
-                  if (value.length < 2) return "merek minimal 2 karakter";
+                  if (value == null) return "deskripsi wajib di isi";
+                  if (value.isEmpty) return "deskripsi wajib di isi";
+                  if (value.length < 2) return "deskripsi minimal 2 karakter";
                   return null;
                 },
                 decoration: InputDecoration(
-                    labelText: 'Merek',
+                    labelText: 'Deskripsi',
                     isDense: true,
+                    alignLabelWithHint: true,
                     contentPadding: const EdgeInsets.all(16),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -167,14 +128,57 @@ class _FormBarangState extends State<FormBarang> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
+              child: ButtonTheme(
+                alignedDropdown: true,
+                child: DropdownButtonFormField<String?>(
+                  validator: ((value) {
+                    if (value == null) return "jenis barang wajib di isi";
+                    if (value.isEmpty) return "jenis barang wajib di isi";
+                    return null;
+                  }),
+                  isDense: true,
+                  borderRadius: BorderRadius.circular(12),
+                  value: jenis?.text == "" ? "Alat" : jenis?.text,
+                  hint: const Text("Pilih jenis barang"),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  items: const <DropdownMenuItem<String?>>[
+                    DropdownMenuItem(
+                      child: Text("Alat"),
+                      value: "Alat",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Bahan"),
+                      value: "Bahan",
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        jenis?.text = value ?? "";
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
                 child: (widget.barang == null)
-                    ? const Text('Add', style: TextStyle(color: Colors.white))
-                    : const Text('Update',
-                        style: TextStyle(color: Colors.white)),
+                    ? const Text('Tambah',
+                        style: TextStyle(color: Colors.white))
+                    : const Text('Ubah', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   if (formKey.currentState?.validate() ?? false) {
+                    if (jenis?.text.isEmpty ?? true) {
+                      jenis?.text = "Alat";
+                    }
                     upsertBarang();
                   }
                 },
