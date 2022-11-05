@@ -11,7 +11,7 @@ class BarangKeluarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Daftar Barang Masuk"),
+        title: const Text("Daftar Barang Keluar"),
       ),
       body: ListView.builder(itemBuilder: (context, index) {
         return Column(

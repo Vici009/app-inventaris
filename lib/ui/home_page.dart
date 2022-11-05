@@ -4,6 +4,7 @@ import 'package:flutter_crud/theme/color.dart';
 import 'package:flutter_crud/theme/text_style.dart';
 
 import '../model/barang.dart';
+import 'barang_keluar.dart';
 import 'barang_masuk.dart';
 import 'form_barang.dart';
 
@@ -288,7 +289,14 @@ class _BottomSheetState extends State<BottomSheet> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: ((context) => const BarangKeluarPage()),
+                        ),
+                        );
+                      },
                       child: const Text("Barang Keluar"),
                     ),
                   ),
