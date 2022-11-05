@@ -2,6 +2,7 @@
 //membuat database, membuat tabel, proses insert, read, update dan delete
 
 import 'package:flutter_crud/model/barang.dart';
+import 'package:flutter_crud/model/barang_masuk.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -44,6 +45,13 @@ class DbHelper {
         "$columnDeskripsi TEXT,"
         "$columnJenis TEXT)";
     await db.execute(sql);
+    var sqlBarangMasuk = "CREATE TABLE barang_masuk(id INTEGER PRIMARY KEY,"
+        "barang_id INTEGER,"
+        "nama TEXT,"
+        "jumlah TEXT,"
+        "deskripsi TEXT,"
+        "created_at TEXT)";
+    await db.execute(sqlBarangMasuk);
   }
 
   //insert ke database
@@ -52,8 +60,20 @@ class DbHelper {
     return await dbClient!.insert(tableName, barang.toMap());
   }
 
+  //insert ke database
+  Future<int?> saveBarangMasuk(BarangMasuk barang) async {
+    var dbClient = await _db;
+    return await dbClient!.insert("barang_masuk", {
+      "barang_id": barang.barang?.idBrg,
+      "nama": barang.nama,
+      "jumlah": barang.jumlah,
+      "deskripsi": barang.deskripsi,
+      "created_at": barang.createdAt,
+    });
+  }
+
   //read database
-  Future<List?> getAllBarang() async {
+  Future<List<Barang>> getAllBarang() async {
     var dbClient = await _db;
     var result = await dbClient!.query(tableName, columns: [
       columnId,
@@ -63,7 +83,79 @@ class DbHelper {
       columnDeskripsi
     ]);
 
-    return result.toList();
+    return result.toList().map((barang) => Barang.fromMap(barang)).toList();
+  }
+
+  //read database
+  Future<List<BarangMasuk>> getAllBarangMasuk() async {
+    var dbClient = await _db;
+    var result = await dbClient!.query(
+      "barang_masuk",
+      columns: [
+        "id",
+        "barang_id",
+        "nama",
+        "jumlah",
+        "deskripsi",
+        "created_at",
+      ],
+    );
+
+    List<BarangMasuk> barangMasuk = [];
+    for (final data in result.toList()) {
+      final barang = await getAllBarangById((data["barang_id"] as int));
+      barangMasuk.add(BarangMasuk(
+        id: (data["id"] as int),
+        nama: data["nama"] as String,
+        deskripsi: data["deskripsi"] as String,
+        jumlah: data["jumlah"] as String,
+        createdAt: data["created_at"] as String,
+        barang: barang.first,
+      ));
+    }
+    return barangMasuk;
+  }
+
+  Future<List<Barang>> getAllBarangByName(String? query) async {
+    var dbClient = await _db;
+    if (query == null) {
+      return await getAllBarang();
+    }
+    var result = await dbClient!.query(
+      tableName,
+      columns: [
+        columnId,
+        columnNama,
+        columnJenis,
+        columnJumlah,
+        columnDeskripsi
+      ],
+      where: "nama_brg = ?",
+      whereArgs: [query],
+    );
+
+    return result.toList().map((barang) => Barang.fromMap(barang)).toList();
+  }
+
+  Future<List<Barang>> getAllBarangById(int? query) async {
+    var dbClient = await _db;
+    if (query == null) {
+      return await getAllBarang();
+    }
+    var result = await dbClient!.query(
+      tableName,
+      columns: [
+        columnId,
+        columnNama,
+        columnJenis,
+        columnJumlah,
+        columnDeskripsi
+      ],
+      where: "id_brg = ?",
+      whereArgs: [query],
+    );
+
+    return result.toList().map((barang) => Barang.fromMap(barang)).toList();
   }
 
   //update database

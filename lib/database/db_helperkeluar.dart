@@ -3,7 +3,7 @@
 //dbhelper ini dibuat untuk
 //membuat database, membuat tabel, proses insert, read, update dan delete
 
-import 'package:flutter_crud/model/barangkeluar.dart';
+import 'package:flutter_crud/model/barang_keluar.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
