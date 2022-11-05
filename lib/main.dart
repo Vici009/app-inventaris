@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud/theme/color.dart';
 import 'package:flutter_crud/ui/login_page.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('id', null);
   runApp(const MyApp());
 }
 

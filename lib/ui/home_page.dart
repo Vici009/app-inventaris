@@ -32,13 +32,13 @@ class _HomePageState extends State<HomePage> {
       //hapus data pada listBarang
       listBarang?.clear();
 
-      if (list == null || list.isEmpty) {
+      if (list.isEmpty) {
         return;
       }
       //lakukan perulangan pada variabel list
       for (var barang in list) {
         //masukan data ke listBarang
-        listBarang?.add(Barang.fromMap(barang));
+        listBarang?.add(barang);
       }
     });
   }
@@ -291,10 +291,10 @@ class _BottomSheetState extends State<BottomSheet> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
+                          context,
+                          MaterialPageRoute(
                             builder: ((context) => const BarangKeluarPage()),
-                        ),
+                          ),
                         );
                       },
                       child: const Text("Barang Keluar"),
