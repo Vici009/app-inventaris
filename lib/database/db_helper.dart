@@ -3,6 +3,7 @@
 
 import 'package:flutter_crud/model/barang.dart';
 import 'package:flutter_crud/model/barang_masuk.dart';
+import 'package:flutter_crud/model/barang_keluar.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -52,6 +53,13 @@ class DbHelper {
         "deskripsi TEXT,"
         "created_at TEXT)";
     await db.execute(sqlBarangMasuk);
+    var sqlBarangKeluar = "CREATE TABLE barang_keluar(id INTEGER PRIMARY KEY,"
+        "barang_id INTEGER,"
+        "nama TEXT,"
+        "jumlah TEXT,"
+        "deskripsi TEXT,"
+        "created_at TEXT)";
+    await db.execute(sqlBarangKeluar);
   }
 
   //insert ke database
@@ -64,6 +72,18 @@ class DbHelper {
   Future<int?> saveBarangMasuk(BarangMasuk barang) async {
     var dbClient = await _db;
     return await dbClient!.insert("barang_masuk", {
+      "barang_id": barang.barang?.idBrg,
+      "nama": barang.nama,
+      "jumlah": barang.jumlah,
+      "deskripsi": barang.deskripsi,
+      "created_at": barang.createdAt,
+    });
+  }
+
+  //insert ke database
+  Future<int?> saveBarangKeluar(BarangKeluar barang) async {
+    var dbClient = await _db;
+    return await dbClient!.insert("barang_keluar", {
       "barang_id": barang.barang?.idBrg,
       "nama": barang.nama,
       "jumlah": barang.jumlah,
@@ -114,6 +134,36 @@ class DbHelper {
       ));
     }
     return barangMasuk;
+  }
+
+  //read database
+  Future<List<BarangKeluar>> getAllBarangKeluar() async {
+    var dbClient = await _db;
+    var result = await dbClient!.query(
+      "barang_keluar",
+      columns: [
+        "id",
+        "barang_id",
+        "nama",
+        "jumlah",
+        "deskripsi",
+        "created_at",
+      ],
+    );
+
+    List<BarangKeluar> barangKeluar = [];
+    for (final data in result.toList()) {
+      final barang = await getAllBarangById((data["barang_id"] as int));
+      barangKeluar.add(BarangKeluar(
+        id: (data["id"] as int),
+        nama: data["nama"] as String,
+        deskripsi: data["deskripsi"] as String,
+        jumlah: data["jumlah"] as String,
+        createdAt: data["created_at"] as String,
+        barang: barang.first,
+      ));
+    }
+    return barangKeluar;
   }
 
   Future<List<Barang>> getAllBarangByName(String? query) async {
