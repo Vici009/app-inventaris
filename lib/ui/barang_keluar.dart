@@ -47,7 +47,7 @@ class _BarangKeluarPageState extends State<BarangKeluarPage> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Pengembali : ${barangKeluar.nama}"),
+                    Text("Peminjam : ${barangKeluar.nama}"),
                     Text("Deskripsi : ${barangKeluar.deskripsi}"),
                     Text(
                       DateFormat.yMMMMEEEEd('id').format(
