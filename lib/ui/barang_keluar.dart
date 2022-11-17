@@ -43,6 +43,12 @@ class _BarangKeluarPageState extends State<BarangKeluarPage> {
           return Column(
             children: [
               ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: kPrimaryColor,
+                  child: (barangKeluar.barang?.jenis == "Alat")
+                      ? const Icon(Icons.handyman)
+                      : const Icon(Icons.hive),
+                ),
                 title: Text("${barangKeluar.barang?.namaBrg}"),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
