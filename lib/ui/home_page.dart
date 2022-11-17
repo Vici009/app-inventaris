@@ -121,9 +121,12 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ).then((_) => _getAllBarang());
                                 },
-                                leading: const CircleAvatar(
-                                    backgroundColor: kPrimaryColor,
-                                    child: Icon(Icons.computer)),
+                                leading: CircleAvatar(
+                                  backgroundColor: kPrimaryColor,
+                                  child: (barang.jenis == "Alat")
+                                      ? const Icon(Icons.handyman)
+                                      : const Icon(Icons.hive),
+                                ),
                                 title: Text(
                                   "${barang.namaBrg}",
                                   style: AppTextStyle.medium(fontSize: 16),
@@ -158,9 +161,8 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 trailing: Container(
-                                  // width: 30,
-                                  width: 50,
-                                  height: 30,
+                                  width: 60,
+                                  height: 40,
                                   alignment: Alignment.center,
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 2,
@@ -170,9 +172,8 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius: BorderRadius.circular(6),
                                     color: kPrimaryColor,
                                   ),
-                                  // FIXME : PERBAIKI TOTAL BARANG
                                   child: Text(
-                                    "${barang.jumlah}/3",
+                                    "${barang.jumlah}",
                                     style: AppTextStyle.reg(
                                         color: Colors.white, fontSize: 12),
                                   ),
@@ -197,6 +198,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ).then((_) => _getAllBarang());
               },
+              getAllBarang: _getAllBarang(),
             )
           ],
         ),
@@ -209,8 +211,10 @@ class BottomSheet extends StatefulWidget {
   const BottomSheet({
     Key? key,
     this.onPressed,
+    required this.getAllBarang,
   }) : super(key: key);
   final void Function()? onPressed;
+  final Future<void> getAllBarang;
 
   @override
   State<BottomSheet> createState() => _BottomSheetState();
@@ -280,7 +284,7 @@ class _BottomSheetState extends State<BottomSheet> {
                           MaterialPageRoute(
                             builder: ((context) => const BarangMasukPage()),
                           ),
-                        );
+                        ).then((value) async => await widget.getAllBarang);
                       },
                       child: const Text("Barang Masuk"),
                     ),
@@ -295,7 +299,7 @@ class _BottomSheetState extends State<BottomSheet> {
                           MaterialPageRoute(
                             builder: ((context) => const BarangKeluarPage()),
                           ),
-                        );
+                        ).then((value) async => await widget.getAllBarang);
                       },
                       child: const Text("Barang Keluar"),
                     ),

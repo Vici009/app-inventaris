@@ -63,4 +63,20 @@ class Barang {
 
   factory Barang.fromJson(String source) =>
       Barang.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  Barang copyWith({
+    int? idBrg,
+    String? namaBrg,
+    String? jumlah,
+    String? deskripsi,
+    String? jenis,
+  }) {
+    return Barang(
+      idBrg: idBrg ?? this.idBrg,
+      namaBrg: namaBrg ?? this.namaBrg,
+      jumlah: jumlah ?? this.jumlah,
+      deskripsi: deskripsi ?? this.deskripsi,
+      jenis: jenis ?? this.jenis,
+    );
+  }
 }

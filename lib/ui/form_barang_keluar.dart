@@ -17,7 +17,7 @@ class _FormBarangKeluarState extends State<FormBarangKeluar> {
   final TextEditingController namaController = TextEditingController();
   final TextEditingController jumlahBarangController = TextEditingController();
   final TextEditingController deskripsiBarangController =
-  TextEditingController();
+      TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
   Barang? barang;
 
@@ -50,8 +50,8 @@ class _FormBarangKeluarState extends State<FormBarangKeluar> {
                     itemAsString: (Barang barang) => barang.namaBrg ?? "",
                     filterFn: (item, filter) {
                       return item.namaBrg?.toLowerCase().contains(
-                        filter.toLowerCase(),
-                      ) ??
+                                filter.toLowerCase(),
+                              ) ??
                           false;
                     },
                     compareFn: (item1, item2) {
@@ -92,7 +92,7 @@ class _FormBarangKeluarState extends State<FormBarangKeluar> {
                     },
                     dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration:
-                      InputDecoration(labelText: "Cari Barang"),
+                          InputDecoration(labelText: "Cari Barang"),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -130,6 +130,11 @@ class _FormBarangKeluarState extends State<FormBarangKeluar> {
                         if (value.isEmpty) return "jumlah wajib di isi";
                         if (int.tryParse(value) == null) {
                           return "jumlah tidak valid";
+                        }
+                        if (barang?.jumlah == null) return null;
+                        if (int.parse(value) >
+                            int.parse(barang?.jumlah ?? '0')) {
+                          return "Barang maksimal adalah ${barang?.jumlah ?? 0}";
                         }
                         return null;
                       },
@@ -185,6 +190,12 @@ class _FormBarangKeluarState extends State<FormBarangKeluar> {
                               deskripsi: deskripsiBarangController.text,
                               createdAt: DateTime.now().toIso8601String(),
                               barang: barang),
+                        );
+                        if (barang == null) return;
+                        final jumlah = int.parse(barang?.jumlah ?? "0") -
+                            int.parse(jumlahBarangController.text);
+                        DbHelper().updateBarang(
+                          barang!.copyWith(jumlah: jumlah.toString()),
                         );
                         Navigator.pop(context);
                       }

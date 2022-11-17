@@ -186,6 +186,12 @@ class _FormBarangMasukState extends State<FormBarangMasuk> {
                               createdAt: DateTime.now().toIso8601String(),
                               barang: barang),
                         );
+                        if (barang == null) return;
+                        final jumlah = int.parse(barang?.jumlah ?? "0") +
+                            int.parse(jumlahBarangController.text);
+                        DbHelper().updateBarang(
+                          barang!.copyWith(jumlah: jumlah.toString()),
+                        );
                         Navigator.pop(context);
                       }
                     },
