@@ -63,8 +63,10 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final barang = listBarang![index];
                         return Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Dismissible(
+                              key: ValueKey<int>(listBarang![index].idBrg!),
                               confirmDismiss: ((direction) async {
                                 bool result = false;
                                 await showDialog<bool>(
@@ -100,7 +102,6 @@ class _HomePageState extends State<HomePage> {
                                 return result;
                               }),
                               onDismissed: (_) async {
-                                print("didismissed");
                                 await DbHelper().deleteBarang(barang.idBrg!);
                               },
                               background: Container(
@@ -110,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                                 child: const Icon(Icons.delete,
                                     color: Colors.white),
                               ),
-                              key: UniqueKey(),
                               direction: DismissDirection.endToStart,
                               child: ListTile(
                                 onTap: () {
