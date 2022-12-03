@@ -66,41 +66,36 @@ class _HomePageState extends State<HomePage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Dismissible(
-                              key: ValueKey<int>(listBarang![index].idBrg!),
-                              confirmDismiss: ((direction) async {
-                                bool result = false;
-                                await showDialog<bool>(
-                                  context: context,
-                                  builder: ((context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Hapus Data",
-                                        style:
-                                            AppTextStyle.semiBold(fontSize: 24),
-                                      ),
-                                      content: Text(
-                                        "Apakah anda yakin ingin menghapus ${barang.namaBrg}",
-                                        style: AppTextStyle.reg(),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              result = true;
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text("Ya")),
-                                        TextButton(
-                                            onPressed: () {
-                                              result = false;
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text("Tidak"))
-                                      ],
-                                    );
-                                  }),
-                                );
-                                return result;
-                              }),
+                              key: ValueKey("${listBarang![index].idBrg!}"),
+                              confirmDismiss: ((direction) => showDialog<bool>(
+                                    context: context,
+                                    builder: ((context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Hapus Data",
+                                          style: AppTextStyle.semiBold(
+                                              fontSize: 24),
+                                        ),
+                                        content: Text(
+                                          "Apakah anda yakin ingin menghapus ${barang.namaBrg}",
+                                          style: AppTextStyle.reg(),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true);
+                                              },
+                                              child: const Text("Ya")),
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(false);
+                                              },
+                                              child: const Text("Tidak"))
+                                        ],
+                                      );
+                                    }),
+                                  )),
                               onDismissed: (_) async {
                                 await DbHelper().deleteBarang(barang.idBrg!);
                               },
