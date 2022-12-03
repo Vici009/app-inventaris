@@ -186,6 +186,7 @@ class _FormBarangMasukState extends State<FormBarangMasuk> {
                               createdAt: DateTime.now().toIso8601String(),
                               barang: barang),
                         );
+                        //ini relasi barang masuk ke jumlah kelola barang
                         if (barang == null) return;
                         final jumlah = int.parse(barang?.jumlah ?? "0") +
                             int.parse(jumlahBarangController.text);
@@ -206,7 +207,7 @@ class _FormBarangMasukState extends State<FormBarangMasuk> {
       ),
     );
   }
-
+  //Mengambil data kelola barang untuk barang masuk
   Future<List<Barang>> getData() async {
     return DbHelper().getAllBarang();
   }

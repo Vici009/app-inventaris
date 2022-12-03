@@ -100,6 +100,7 @@ class _HomePageState extends State<HomePage> {
                                 return result;
                               }),
                               onDismissed: (_) async {
+                                print("didismissed");
                                 await DbHelper().deleteBarang(barang.idBrg!);
                               },
                               background: Container(
